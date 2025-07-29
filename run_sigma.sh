@@ -25,6 +25,5 @@ for task in recall_short; do
     --model_name_or_path ${model_path} \
     --output_dir output/${model_name}_${iter}/ \
     --use_chat_template False # only if you are using non-instruction-tuned models, otherwise use the default.
+  mv output/${model_name}_${iter} /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${model_name}_${iter}
 done
-mv output/${model_name}_${iter} /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${model_name}_${iter}
-
