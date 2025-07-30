@@ -16,6 +16,6 @@ CUDA_VISIBLE_DEVICES=4,5 bash run_sigma.sh 1400 &
 CUDA_VISIBLE_DEVICES=6,7 bash run_sigma.sh 1600 &
 wait
 
-# CUDA_VISIBLE_DEVICES=0,1 bash run_sigma.sh 1800 &
-# CUDA_VISIBLE_DEVICES=2,3 bash run_sigma.sh 2000 &
+CUDA_VISIBLE_DEVICES=0,1 bash run_sigma.sh 1800 &
+CUDA_VISIBLE_DEVICES=2,3 bash run_sigma.sh 2000 &
 wait
