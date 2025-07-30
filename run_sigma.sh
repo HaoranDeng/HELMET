@@ -20,7 +20,7 @@ blob_ckpt_path="/mnt/blob-pretraining-hptrainingwestcentralus/checkpoints"
 iter="hf_iter_$1"
 model_path="${blob_ckpt_path}/${model_name}/${iter}"
 
-for task in recall_short; do
+for task in rag_short icl_short cite_short; do
   python eval.py --config configs/${task}.yaml \
     --model_name_or_path ${model_path} \
     --output_dir output/${model_name}_${iter}/ \
