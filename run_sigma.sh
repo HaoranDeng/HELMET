@@ -22,6 +22,7 @@ model_path="${blob_ckpt_path}/${model_name}/${iter}"
 
 for task in rag_short icl_short cite_short; do
   python eval.py --config configs/${task}.yaml \
+    --num_workers 20 \
     --model_name_or_path ${model_path} \
     --output_dir output/${model_name}_${iter}/ \
     --use_chat_template False # only if you are using non-instruction-tuned models, otherwise use the default.
