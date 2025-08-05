@@ -20,11 +20,21 @@ blob_ckpt_path="/mnt/blob-pretraining-hptrainingwestcentralus/checkpoints"
 iter="hf_iter_$1"
 model_path="${blob_ckpt_path}/${model_name}/${iter}"
 
+echo "Starting evaluation for model ${model_name} at iteration ${iter}"
+
 for task in rag_short icl_short cite_short; do
   python eval.py --config configs/${task}.yaml \
     --num_workers 20 \
     --model_name_or_path ${model_path} \
-    --output_dir output/${model_name}_${iter}/ \
+    --output_dir output/${task}/${model_name}_${iter}/ \
     --use_chat_template False # only if you are using non-instruction-tuned models, otherwise use the default.
-  mv output/${model_name}_${iter} /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${model_name}_${iter}
+  # Create target directory if it doesn't exist
+  mkdir -p /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${task}/${model_name}_${iter}
+  # Move the contents of the output directory to the target location
+  mv output/${task}/${model_name}_${iter}/* /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${task}/${model_name}_${iter}/
+  # Remove the empty local output directory
+  rmdir output/${task}/${model_name}_${iter}
+  echo "Task ${task} results moved to /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${task}/${model_name}_${iter}"
 done
+
+echo "All tasks completed! Model ${model_name}_${iter} evaluation results saved to /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/ with task-specific subdirectories"

@@ -16,14 +16,14 @@ model_name=$(basename "$model_name_or_path")
 for task in recall_short rag_short icl_short cite_short summ_short longqa_short; do
   python eval.py --config configs/${task}.yaml \
     --model_name_or_path ${model_name_or_path} \
-    --output_dir output/${model_name}/ \
+    --output_dir output/${task}/${model_name}/ \
     --use_chat_template False # only if you are using non-instruction-tuned models, otherwise use the default.
   # Create target directory if it doesn't exist
-  mkdir -p /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${model_name}
+  mkdir -p /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${task}/${model_name}
   # Copy the contents of the output directory to the target location
-  cp -r output/${model_name}/* /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${model_name}/
-  echo "Task ${task} results copied to /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${model_name}"
+  cp -r output/${task}/${model_name}/* /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${task}/${model_name}/
+  echo "Task ${task} results copied to /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${task}/${model_name}"
 done
 
-echo "All tasks completed! Model ${model_name} evaluation results saved to /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/${model_name}"
+echo "All tasks completed! Model ${model_name} evaluation results saved to /mnt/blob-pretraining-hptrainingwestcentralus/haoran_result/HELMET/ with task-specific subdirectories"
 
