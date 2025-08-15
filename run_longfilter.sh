@@ -24,9 +24,9 @@ checkpoint_name="checkpoint-${iter}"
 # 构建模型路径
 model_path="/mnt/blob-pretraining-hptraining/long_corpus/checkpoints/${model_name}/${checkpoint_name}"
 
-echo "Starting evaluation for model ${model_name} at ${checkpoint_name}"
 
 for task in recall_short rag_short icl_short cite_short; do
+  echo "Starting evaluation for model ${model_name} at ${checkpoint_name} for task ${task}."
   python eval.py --config configs/${task}.yaml \
     --num_workers 20 \
     --model_name_or_path ${model_path} \
